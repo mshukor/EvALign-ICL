@@ -341,7 +341,7 @@ If you found this repository useful, you can cite it as:
       @article{shukor2023beyond,
         title={Beyond Task Performance: Evaluating and Reducing the Flaws of Large Multimodal Models with In-Context Learning},
         author={Shukor, Mustafa and Rame, Alexandre and Dancette, Corentin and and Cord, Matthieu},
-        journal={arXiv preprint arXiv:2307.16184},
+        journal={arXiv preprint arXiv:2310.00647},
         year={2023}
-      }    
+      }     
 ```

@@ -7,7 +7,6 @@ python3 -m spacy download en_core_web_lg
 python -m spacy download en
  pip install SceneGraphParser -->
 
-
 <p align="center">
     <br>
     <img src="docs/logo_main.png" width="400" />
@@ -16,7 +15,7 @@ python -m spacy download en
 
 
 <p align="center">
-        &nbsp<a href="https://evalign-icl.github.io/">Project Page</a> &nbsp | &nbsp<a href="https://arxiv.org/abs">Paper</a>&nbsp 
+        &nbsp<a href="https://evalign-icl.github.io/">Project Page</a> &nbsp | &nbsp<a href="https://arxiv.org/abs/2310.00647">Paper</a>&nbsp 
 </p>
 
 # (EvALign-ICL) Beyond Task Performance: Evaluating and Reducing the Flaws of Large Multimodal Models with In-Context Learning

@@ -45,7 +45,8 @@ efficiently tackle some of those flaws.
 
 
 # News
-* **[2023.10.1]**: The code will be released soon. For now you can install the libraries, download the models and prepare the datasets !
+* **[2023.10.10]**: code is released !
+* **[2023.10.1]**: the code will be released soon. For now you can install the libraries, download the models and prepare the datasets !
 
 # Table of Contents
 - [Installation](#installation)

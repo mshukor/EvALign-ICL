@@ -6,7 +6,7 @@
 
 
 <p align="center">
-        &nbsp<a href="https://evalign-icl.github.io/">Project Page</a> &nbsp | &nbsp<a href="https://arxiv.org/abs/">Paper (soon) </a>&nbsp 
+        &nbsp<a href="https://evalign-icl.github.io/">Project Page</a> &nbsp | &nbsp<a href="https://arxiv.org/abs/2310.00647">Paper</a>&nbsp 
 </p>
 
 # (EvALign-ICL) Beyond Task Performance: Evaluating and Reducing the Flaws of Large Multimodal Models with In-Context Learning
@@ -341,10 +341,10 @@ The authors would like to thank [Hugo Laurençon](https://huggingface.co/HugoLau
 If you found this repository useful, you can cite it as:
 
 ```
-@article{shukor2023beyond,
-  title={Beyond Task Performance: Evaluating and Reducing the Flaws of Large Multimodal Models with In-Context Learning},
-  author={Shukor, Mustafa and Rame, Alexandre and Dancette, Corentin and Cord, Matthieu},
-  journal={arXiv preprint arXiv:2310.00647},
-  year={2023}
-}  
+      @article{shukor2023beyond,
+        title={Beyond Task Performance: Evaluating and Reducing the Flaws of Large Multimodal Models with In-Context Learning},
+        author={Shukor, Mustafa and Rame, Alexandre and Dancette, Corentin and and Cord, Matthieu},
+        journal={arXiv preprint arXiv:2310.00647},
+        year={2023}
+      }     
 ```

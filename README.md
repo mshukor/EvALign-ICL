@@ -1,13 +1,3 @@
-
-<!-- # installation
-
-Chairplus: 
-
-python3 -m spacy download en_core_web_lg
-python -m spacy download en
- pip install SceneGraphParser -->
-
-
 <p align="center">
     <br>
     <img src="docs/logo_main.png" width="400" />
@@ -78,8 +68,10 @@ transformers == 4.28.0
 accelerate == 0.21.0
 ```
 
-# Usage
-To do inference on custom images and see your results you can check [OpenFlamingo](https://github.com/mlfoundations/open_flamingo#usage) and [IDEFICS](https://huggingface.co/blog/idefics)
+# Usage and Model Download
+
+To do inference on custom images and see your results you can check [OpenFlamingo](https://github.com/mlfoundations/open_flamingo#usage) and [IDEFICS](https://huggingface.co/blog/idefics). You need also to follow these repo to download the models. 
+ 
 
 
 
@@ -324,9 +316,20 @@ We push ICL further and propose new improved variants to address some of LMMs li
 
 # Extending EvALign-ICL
 
-Adding new Benchmarks/Models/Metrics
 
-ToDo
+### Adding new Benchmarks:
+To add new benchmarks/dataset you need to consider the following:
+* Dataset: in `open_flamingo/eval/eval_datasets` we define the classes to read different datasets
+* Metrics: these are defined in different folders according to the task (e.g. `vqa_metrics`, `caption_metrics`) and used in `eval_acc.py`. Some easy metrics are implemented directly in `eval_acc.py`
+
+### Adding new models:
+For each family of models we create new script (e.g., `eval_acc.py` for OF and `eval_acc_idefics.py` for IDEFICS). We currently consider models supported by the HuggingFace `transformers` library.
+
+### Adding new ICL approaches:
+To add new ICL variants, you need to mainly modify two functions. For example to do captioning (in `open_flamingo/eval/caption_utils.py`):
+* `get_prompt()`: to generate the format of the query/demonstraionts prompt
+* `postprocess_generation()`: to parse the useful output from the model raw text generation 
+
 
 # Acknowledgments
 The code is mainly based on the following previous work: [OpenFlamingo](https://github.com/mlfoundations/open_flamingo) and [IDEFICS](https://huggingface.co/blog/idefics).
@@ -338,10 +341,10 @@ The authors would like to thank [Hugo Laurençon](https://huggingface.co/HugoLau
 If you found this repository useful, you can cite it as:
 
 ```
-      @article{shukor2023beyond,
-        title={Beyond Task Performance: Evaluating and Reducing the Flaws of Large Multimodal Models with In-Context Learning},
-        author={Shukor, Mustafa and Rame, Alexandre and Dancette, Corentin and and Cord, Matthieu},
-        journal={arXiv preprint arXiv:2307.16184},
-        year={2023}
-      }    
+@article{shukor2023beyond,
+  title={Beyond Task Performance: Evaluating and Reducing the Flaws of Large Multimodal Models with In-Context Learning},
+  author={Shukor, Mustafa and Rame, Alexandre and Dancette, Corentin and Cord, Matthieu},
+  journal={arXiv preprint arXiv:2310.00647},
+  year={2023}
+}  
 ```

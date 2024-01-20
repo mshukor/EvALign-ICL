@@ -166,6 +166,8 @@ class ITMDataset(Dataset):
             neg_key = f'valid_hard_negs_{self.neg_type}'
         elif self.compos == 'prod':
             neg_key = self.neg_type
+        elif self.compos == 'sugar':
+            neg_key = "negative_caption"
         else:
             self.negative_captions = {a['image_id']: a['caption'] for a in annotations}
             neg_key='caption'
@@ -178,7 +180,7 @@ class ITMDataset(Dataset):
 
         for ann in self.annotations:
             ann['pos_caption'] = ann[pos_key]
-            if self.compos not in ['sys', 'prod']:
+            if self.compos in ['normal']:
                 ann['neg_caption'] = random.choices(self.annotations, k=1)[0][neg_key]
             else:
                 ann['neg_caption'] = ann[neg_key]

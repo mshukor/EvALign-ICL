@@ -20,6 +20,13 @@ LM_PATH='HuggingFaceM4/idefics-9b-instruct'
 LM_TOKENIZER_PATH='HuggingFaceM4/idefics-9b-instruct'
 MODEL="IDEFICS9BINSTRUCT"
 
+# LM_PATH='HuggingFaceM4/idefics-80b'
+# LM_TOKENIZER_PATH='HuggingFaceM4/idefics-80b'
+# MODEL="IDEFICS80B"
+
+# LM_PATH='HuggingFaceM4/idefics-80b-instruct'
+# LM_TOKENIZER_PATH='HuggingFaceM4/idefics-80b-instruct'
+# MODEL="IDEFICS80BINSTRUCT"
 
 
 

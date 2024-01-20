@@ -20,7 +20,13 @@ MODEL="IDEFICS9B"
 # LM_TOKENIZER_PATH='HuggingFaceM4/idefics-9b-instruct'
 # MODEL="IDEFICS9BINSTRUCT"
 
+# LM_PATH='HuggingFaceM4/idefics-80b'
+# LM_TOKENIZER_PATH='HuggingFaceM4/idefics-80b'
+# MODEL="IDEFICS80B"
 
+# LM_PATH='HuggingFaceM4/idefics-80b-instruct'
+# LM_TOKENIZER_PATH='HuggingFaceM4/idefics-80b-instruct'
+# MODEL="IDEFICS80BINSTRUCT"
 
 ## Dataset
 TESTSET='--testset' # set to '' if you want to test on llava training set
@@ -43,6 +49,7 @@ for shot in {1,0,2,4,8,16,32};do
     TEST_ANN_PATH="${DATA}/data/llava/test_llava_complex_reasoning_77k.json"
 
     MODE="llava_complex_questions"
+    # MODE="llava_complex_questions_user_assistant" # for idefics-instruct
     VQAV2_ANNO_PATH="${DATA}/data/llava/llava_complex_reasoning_77k.json"
     echo $MODE
     echo $TEST_ANN_PATH
@@ -80,6 +87,7 @@ for shot in {1,0,2,4,8,16,32};do
 
 
     MODE="llava_detail_questions"
+    # MODE="llava_detail_questions_user_assistant"
     VQAV2_ANNO_PATH="${DATA}/data/llava/llava_detail_23k.json"
 
     echo $MODE
@@ -120,6 +128,7 @@ for shot in {1,0,2,4,8,16,32};do
 
 
     MODE="llava_conv_questions"
+    # MODE="llava_conv_questions_user_assistant"
     VQAV2_ANNO_PATH="${DATA}/data/llava/llava_conversation_58k.json"
 
     echo $MODE
@@ -157,7 +166,9 @@ for shot in {1,0,2,4,8,16,32};do
     TEST_ANN_PATH="${DATA}/data/llava/test_llava_conversation_58k.json"
 
 
-    MODE="llava_conv_dialog_questions"
+    # MODE="llava_conv_dialog_questions"
+    MODE="llava_conv_dialog_questions_user_assistant" 
+
     VQAV2_ANNO_PATH="${DATA}/data/llava/llava_conversation_58k.json"
 
     echo $MODE

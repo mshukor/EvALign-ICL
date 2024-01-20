@@ -1,3 +1,13 @@
+
+<!-- # installation
+
+Chairplus: 
+
+python3 -m spacy download en_core_web_lg
+python -m spacy download en
+ pip install SceneGraphParser -->
+
+
 <p align="center">
     <br>
     <img src="docs/logo_main.png" width="400" />
@@ -6,7 +16,7 @@
 
 
 <p align="center">
-        &nbsp<a href="https://evalign-icl.github.io/">Project Page</a> &nbsp | &nbsp<a href="https://arxiv.org/abs/2310.00647">Paper</a>&nbsp 
+        &nbsp<a href="https://evalign-icl.github.io/">Project Page</a> &nbsp | &nbsp<a href="https://arxiv.org/abs/2310.00647">Paper </a>&nbsp 
 </p>
 
 # (EvALign-ICL) Beyond Task Performance: Evaluating and Reducing the Flaws of Large Multimodal Models with In-Context Learning
@@ -19,34 +29,26 @@
     <br>
 <p>
 
+### Abstract
+>  Following the success of Large Language Models (LLMs), Large Multimodal Models (LMMs), such as the Flamingo model and its subsequent competitors, have started to emerge as natural steps towards generalist agents. However, interacting with recent LMMs reveals major limitations that are hardly captured by the current evaluation benchmarks. Indeed, task performances (e.g., VQA accuracy) alone do not provide enough clues to understand their real capabilities, limitations, and to which extent such models are aligned to human expectations. 
 
-> **Abstract**: Following the success of Large Language Models (LLMs), Large Multimodal Models (LMMs), such as the Flamingo model and its subsequent competitors, have started to emerge as natural 
-steps towards generalist agents. However, interacting with recent LMMs reveals major limitations that 
-are hardly captured by the current evaluation benchmarks. Indeed, task performances (\emph{e.g.}, VQA accuracy) 
-alone do not provide enough clues to understand their real capabilities, limitations, and to which extent 
-such models are aligned to human expectations. To refine our understanding of those flaws, we deviate from 
-the current evaluation paradigm and propose the <strong>EvALign-ICL</strong> framework 
-(Beyond Task Performance: <strong>Eval</strong>uat<strong>i</strong>n<strong>g</strong> and Reduci<strong>n</strong>g the Flaws of Large 
-Multimodal Models with <strong>I</strong>n-<strong>C</strong>ontext <strong>L</strong>earning), in which (1) we <strong>evaluate 8 recent open-source LMMs</strong> (based on the 
-Flamingo architecture such as OpenFlamingo and IDEFICS) on 5 different axes; <strong>hallucinations, 
-abstention, compositionality, explainability and instruction following</strong>. Our evaluation on these axes 
-reveals major flaws in LMMs. To efficiently address these problems, and inspired by the success of 
-in-context learning (ICL) in LLMs, (2) <strong>we explore ICL as a solution and study how it affects these limitations</strong>. 
-Based on our ICL study, (3) <strong>we push ICL further and propose new multimodal ICL approaches such as; 
-Multitask-ICL, Chain-of-Hindsight-ICL, and Self-Correcting-ICL</strong>. <br></br> 
-<strong><i>Our findings</i></strong> are as follows. 
-(1) Despite their success, LMMs have flaws that remain unsolved with scaling alone. 
-(2) The effect of ICL on LMMs flaws is nuanced; despite its effectiveness for improved explainability, 
-abstention, and instruction following, ICL does not improve compositional abilities, and actually 
-even amplifies hallucinations. (3) The proposed ICL variants are promising as post-hoc approaches to 
-efficiently tackle some of those flaws.
+> To refine our understanding of those flaws, we deviate from the current evaluation paradigm, and (1) evaluate 10 recent open-source LMMs from 3B up to 80B parameter scale,  on 5 different axes; <strong>hallucinations, abstention, compositionality, explainability and instruction following</strong>. <strong>Our evaluation on these axes reveals major flaws in LMMs</strong>.
+
+> While the current go-to solution to align these models is based on training, such as instruction tuning or RLHF, we rather (2) explore the training-free in-context learning (ICL) as a solution, and study how it affects these limitations. Based on our ICL study, (3) we push ICL further and propose <strong>new multimodal ICL variants</strong> such as; Multitask-ICL, Chain-of-Hindsight-ICL, and Self-Correcting-ICL. 
+
+> <strong>Our findings</strong> are as follows. (1) Despite their success, LMMs have flaws that remain unsolved with scaling alone. (2) The effect of ICL on LMMs flaws is nuanced; despite its effectiveness for improved explainability, answer abstention, ICL only slightly improves instruction following, does not improve compositional abilities, and actually even amplifies hallucinations. (3) The proposed ICL variants are promising as post-hoc approaches to efficiently tackle some of those flaws.
+
+
 
 
 
 
 # News
-* **[2023.10.10]**: code is released !
-* **[2023.10.1]**: the code will be released soon. For now you can install the libraries, download the models and prepare the datasets !
+
+* **[2024.1.22]**: The full code is released.
+* **[2024.1.16]**: The paper is accepted at ICLR 2024 !
+* **[2023.11.10]**: We added experiments for the 80B-parameters IDEFICS models, evaluation on SugarCREPE, and GPT-4 evaluation for LlaVA.
+* **[2023.10.1]**: The code will be released soon. For now you can install the libraries, download the models and prepare the datasets !
 
 # Table of Contents
 - [Installation](#installation)
@@ -69,10 +71,8 @@ transformers == 4.28.0
 accelerate == 0.21.0
 ```
 
-# Usage and Model Download
-
-To do inference on custom images and see your results you can check [OpenFlamingo](https://github.com/mlfoundations/open_flamingo#usage) and [IDEFICS](https://huggingface.co/blog/idefics). You need also to follow these repo to download the models. 
- 
+# Usage
+To do inference on custom images and see your results you can check [OpenFlamingo](https://github.com/mlfoundations/open_flamingo#usage) and [IDEFICS](https://huggingface.co/blog/idefics)
 
 
 
@@ -115,7 +115,7 @@ Evaluation setups selected with `MODE`: ICL (`baseline`) or MT-ICL (`caption_obj
 
 <p align="center">
     <br>
-    <img src="docs/coco_chairscider_multi.jpg" width="450" />
+    <img src="docs/coco_chairscider_multi_80b.jpg" width="450" />
     <br>
 <p>
 
@@ -148,7 +148,7 @@ For SC-ICL:
 
 <p align="center">
     <br>
-    <img src="docs/tdiuc_multi.jpg" width="450" />
+    <img src="docs/tdiuc_multi_80b.jpg" width="450" />
     <br>
 <p>
 
@@ -156,7 +156,8 @@ For SC-ICL:
 
 ## Compositionality
 
-### Dataset
+### CREPE
+#### Dataset
 * Download: download the [CREPE](https://github.com/RAIVNLab/CREPE/tree/master/data) dataset and images from [Visual Genome](https://homes.cs.washington.edu/~ranjay/visualgenome/api.html)
 * Format: the data from `syst_vg_hard_negs_seen_compounds_in_laion.json` contain items in the following format:
 ```
@@ -183,8 +184,8 @@ For SC-ICL:
 ``` 
 Objects are used for MT-ICL. Objects are from the annotations of visual genome (`path/visual_genome/annotations/objects.json`). 
 
-### Evaluation
-Launch scripts `scripts/compositionality/`.
+#### Evaluation
+Launch scripts in `scripts/compositionality/`.
 
 Evaluation setups selected with `MODE`: 
 
@@ -197,11 +198,30 @@ To evaluate on systematicity, you need to set `COMPOS` to `sys` and  `NEG_TYPE` 
 
 <p align="center">
     <br>
-    <img src="docs/compo_combined.png" width="850" />
+    <img src="docs/sys_atom_multi_80b.jpg" width="450" />
     <br>
 <p>
 
 > Compositionality. Models are evaluated on the CREPE benchmark with the ITM task. We evaluate on systematicity, we consider 2 types of negative captions: HN-Atom (replacing atoms, such as objects, attributes, or relations with atomic foils) and HN-Comp (composing two negative captions constructed with HN-Atom). We noticed similar observations with productivity
+
+
+### SugarCREPE
+
+The evaluation is similar as before for CREPE, with the following modifictions:
+
+#### Dataset
+* Download: download the [SugarCREPE](https://github.com/RAIVNLab/sugar-crepe).
+
+#### Evaluation
+* Launch scripts in `scripts/compositionality/`. `eval_itm_idefics_sugarcrepe.sh` for IDEFICS and `eval_itm_of_sugarcrepe.sh` for OpenFlamingo.
+
+<p align="center">
+    <br>
+    <img src="docs/sugar_avg.jpg" width="450" />
+    <br>
+<p>
+
+> Evaluation on SugarCREPE. Evaluaation on each type can be found in the paper.
 
 ## Explainability
 
@@ -249,7 +269,7 @@ Evaluation setups selected with `MODE`:
 
 <p align="center">
     <br>
-    <img src="docs/vqax_cider.jpg" width="450" />
+    <img src="docs/vqax_cider_80b.jpg" width="450" />
     <br>
 <p>
 
@@ -278,14 +298,25 @@ Evaluation setups selected with `MODE`, currently we only evaluate with ICL on L
 
 For zero-shot (not a la Flamingo) we set the num of shots to 1 (these are the results illustrated in the paper when we refer to ZS instruction following) 
 
-
 <p align="center">
     <br>
     <img src="docs/all_inst_1-1.png" width="850" />
     <br>
 <p>
-
 > Instruction following. Qualitative evaluation results of IDEFICS and OFv2-9B on the LlaVA benchmark on 3 types of instructions (from left to right): detailed descriptions, complex questions and conversations.
+
+#### Evaluation with GPT4
+
+To evaluate with GPT-4 we follow the same setup as [LlAVA](https://llava-vl.github.io/). After generating the responses with `scripts/instruction_following/`, use `open_flamingo/eval/llava/merge_result_files.py` to merge the output files, then `open_flamingo/eval/llava/eval_llava.sh` to evaluate with GPT$. Don't forget to set your OPENAI_API_KEY variable in therminal.
+
+<p align="center">
+    <br>
+    <img src="docs/llava_all_withzeroshot.jpg" width="450" />
+    <br>
+<p>
+
+> Evaluation on LLaVA-all with GPT-4.
+
 
 # X-ICL
 We push ICL further and propose new improved variants to address some of LMMs limitations. We explore 3 variants illustrated below; CoH-ICL, SC-ICL and MT-ICL.
@@ -315,22 +346,6 @@ We push ICL further and propose new improved variants to address some of LMMs li
 > MT-ICL for abstention. The main task is to answer the question and the second auxiliary task is to decide whether the question is relevant to the image or not.
 
 
-# Extending EvALign-ICL
-
-
-### Adding new Benchmarks:
-To add new benchmarks/dataset you need to consider the following:
-* Dataset: in `open_flamingo/eval/eval_datasets` we define the classes to read different datasets
-* Metrics: these are defined in different folders according to the task (e.g. `vqa_metrics`, `caption_metrics`) and used in `eval_acc.py`. Some easy metrics are implemented directly in `eval_acc.py`
-
-### Adding new models:
-For each family of models we create new script (e.g., `eval_acc.py` for OF and `eval_acc_idefics.py` for IDEFICS). We currently consider models supported by the HuggingFace `transformers` library.
-
-### Adding new ICL approaches:
-To add new ICL variants, you need to mainly modify two functions. For example to do captioning (in `open_flamingo/eval/caption_utils.py`):
-* `get_prompt()`: to generate the format of the query/demonstraionts prompt
-* `postprocess_generation()`: to parse the useful output from the model raw text generation 
-
 
 # Acknowledgments
 The code is mainly based on the following previous work: [OpenFlamingo](https://github.com/mlfoundations/open_flamingo) and [IDEFICS](https://huggingface.co/blog/idefics).
@@ -345,7 +360,7 @@ If you found this repository useful, you can cite it as:
       @article{shukor2023beyond,
         title={Beyond Task Performance: Evaluating and Reducing the Flaws of Large Multimodal Models with In-Context Learning},
         author={Shukor, Mustafa and Rame, Alexandre and Dancette, Corentin and and Cord, Matthieu},
-        journal={arXiv preprint arXiv:2310.00647},
+        journal={arXiv preprint arXiv:2307.16184},
         year={2023}
-      }     
+      }    
 ```

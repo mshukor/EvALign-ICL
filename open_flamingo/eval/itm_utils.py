@@ -23,7 +23,7 @@ def postprocess_generation(predictions):
 
 
 
-
+ 
 
 def get_prompt_itm(sample, train=True, label=None):
     suffix =  ""
@@ -41,7 +41,8 @@ def get_prompt_itm(sample, train=True, label=None):
        
 
 def postprocess_generation_itm(predictions):
-    return predictions.split("Does", 1)[0]
+    answer = re.split("Does|User", predictions, 1)[0]
+    return answer
         
 
 

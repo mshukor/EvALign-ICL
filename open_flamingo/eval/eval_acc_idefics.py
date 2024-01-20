@@ -283,6 +283,7 @@ parser.add_argument(
     default=False,
     help="sampling.",
 )
+parser.add_argument("--gpu_margin", type=int, default=8)
 
 ### Instruction following 
 
@@ -309,7 +310,8 @@ def main():
         args.lm_path,
         args.lm_tokenizer_path,
         low_cpu=args.low_cpu, 
-        use_local_files=not args.skip_use_local_files
+        use_local_files=not args.skip_use_local_files,
+        gpu_margin=args.gpu_margin,
     )
     accelerator.print("Finish creating model")
 
@@ -320,7 +322,8 @@ def main():
         print("cast to half")
         flamingo.half()
 
-    flamingo.to(args.device if args.device >= 0 else "cpu")
+    if "80" not in args.lm_path:
+        flamingo.to(args.device if args.device >= 0 else "cpu")
 
     results = defaultdict(list)
 
@@ -765,6 +768,7 @@ def evaluate_coco_flickr(
                     caption_utils.get_prompt,
                     in_context_samples=batch_demo_samples[i],
                     effective_num_shots=effective_num_shots,
+                    mode=mode,
                     num_shots=num_shots, instruction=instruction, instruct_model="user_assistant" in args.mode
                 )
                 for i in range(len(batch))
@@ -827,9 +831,7 @@ def evaluate_coco_flickr(
                 for i in range(len(batch))
             ]
 
-            batch_text = [context_text[i] + [s["image"]] + split_user_assistant(f"{args.prompt}", instruct_model="user_assistant" in args.mode, train=False) for i, s in enumerate(batch)]
-
-
+            batch_text = [context_text[i] + [s["image"]] + split_user_assistant(f"{args.prompt}", instruct_model="user_assistant" in args.mode, train=False, merge="merge" in mode) for i, s in enumerate(batch)]
 
             postprocess_generation = caption_utils.postprocess_generation
         
@@ -1054,13 +1056,14 @@ def evaluate_itm(
                     prompt_function,
                     in_context_samples=batch_demo_samples[i],
                     effective_num_shots=effective_num_shots,
+                    mode=mode,
                     num_shots=num_shots, instruction=instruction, instruct_model="user_assistant" in args.mode
                 )
                 for i in range(len(batch))
             ]
 
             labels = ['yes' if random.random() > 0.5 else 'no' for i in range(len(batch))]
-            batch_text = [context_text[i] + [s["image"]] + split_user_assistant(prompt_function(s, train=False, label=l), instruct_model="user_assistant" in args.mode, train=False) for i, (s, l) in enumerate(zip(batch, labels))]
+            batch_text = [context_text[i] + [s["image"]] + split_user_assistant(prompt_function(s, train=False, label=l), instruct_model="user_assistant" in args.mode, train=False, merge="merge" in mode) for i, (s, l) in enumerate(zip(batch, labels))]
 
             post_prompt = prompt.split(" ")[0]
             postprocess_generation = partial(itm_utils.postprocess_generation_itm_objects, prompt=post_prompt)
@@ -1074,6 +1077,7 @@ def evaluate_itm(
                 get_context(
                     prompt_function,
                     in_context_samples=batch_demo_samples[i],
+                    mode=mode,
                     effective_num_shots=effective_num_shots,
                     num_shots=num_shots, instruction=instruction, instruct_model="user_assistant" in args.mode
                 )
@@ -1081,7 +1085,7 @@ def evaluate_itm(
             ]
 
             labels = ['yes' if random.random() > 0.5 else 'no' for i in range(len(batch))]
-            batch_text = [context_text[i] + [s["image"]] + split_user_assistant(prompt_function(s, train=False, label=l), instruct_model="user_assistant" in args.mode, train=False) for i, (s, l) in enumerate(zip(batch, labels))]
+            batch_text = [context_text[i] + [s["image"]] + split_user_assistant(prompt_function(s, train=False, label=l), instruct_model="user_assistant" in args.mode, train=False, merge="merge" in mode) for i, (s, l) in enumerate(zip(batch, labels))]
 
 
             postprocess_generation = itm_utils.postprocess_generation_itm
@@ -1093,13 +1097,14 @@ def evaluate_itm(
                     itm_utils.get_prompt,
                     in_context_samples=batch_demo_samples[i],
                     effective_num_shots=effective_num_shots,
+                    mode=mode,
                     num_shots=num_shots, instruction=instruction, instruct_model="user_assistant" in args.mode
                 )
                 for i in range(len(batch))
             ]
 
             labels = ['a' if random.random() > 0.5 else 'b' for i in range(len(batch))]
-            batch_text = [context_text[i] + [s["image"]] + split_user_assistant(itm_utils.get_prompt(s, train=False, label=l), instruct_model="user_assistant" in args.mode, train=False) for i, (s, l) in enumerate(zip(batch, labels))]
+            batch_text = [context_text[i] + [s["image"]] + split_user_assistant(itm_utils.get_prompt(s, train=False, label=l), instruct_model="user_assistant" in args.mode, train=False, merge="merge" in mode) for i, (s, l) in enumerate(zip(batch, labels))]
 
 
             postprocess_generation = itm_utils.postprocess_generation
@@ -1386,7 +1391,7 @@ def evaluate_vqa(
                 ]
 
                 batch_text = [
-                     context_text[i] + [s["image"]] + split_user_assistant( get_prompt_explain_(s, train=False), instruct_model="user_assistant" in args.mode, train=False) for i, s in enumerate(batch)
+                     context_text[i] + [s["image"]] + split_user_assistant( get_prompt_explain_(s, train=False), instruct_model="user_assistant" in args.mode, train=False, merge="merge" in mode) for i, s in enumerate(batch)
                 ]
 
 
@@ -1421,6 +1426,7 @@ def evaluate_vqa(
                         get_prompt,
                         in_context_samples=batch_demo_samples[i],
                         effective_num_shots=effective_num_shots,
+                        mode=mode,
                         num_shots=num_shots, instruction=instruction, instruct_model="user_assistant" in args.mode
                     )
                     for i in range(len(batch))
@@ -1438,6 +1444,7 @@ def evaluate_vqa(
                         get_prompt,
                         in_context_samples=batch_demo_samples[i],
                         effective_num_shots=effective_num_shots,
+                        mode=mode,
                         num_shots=num_shots, mode=mode, instruction=instruction, instruct_model="user_assistant" in args.mode
                     )
                     for i in range(len(batch))
@@ -1446,7 +1453,7 @@ def evaluate_vqa(
                 if num_shots == 1:
                     context_text = [[] for i, s in enumerate(batch)]
                 batch_text = [
-                     context_text[i] + [s["image"]] + split_user_assistant(get_prompt(s, train=False), instruct_model="user_assistant" in args.mode, train=False) for i, s in enumerate(batch)
+                     context_text[i] + [s["image"]] + split_user_assistant(get_prompt(s, train=False), instruct_model="user_assistant" in args.mode, train=False, merge="merge" in mode) for i, s in enumerate(batch)
                 ]
 
                 
@@ -1467,7 +1474,7 @@ def evaluate_vqa(
             if num_shots == 1:
                 context_text = [[] for i, s in enumerate(batch)]
             batch_text = [
-                context_text[i] + [s["image"]] + split_user_assistant(get_prompt(s, train=False), instruct_model="user_assistant" in args.mode, train=False) for i, s in enumerate(batch)
+                context_text[i] + [s["image"]] + split_user_assistant(get_prompt(s, train=False), instruct_model="user_assistant" in args.mode, train=False, merge="merge" in mode) for i, s in enumerate(batch)
             ]
 
 

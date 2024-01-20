@@ -21,7 +21,13 @@ LM_PATH='HuggingFaceM4/idefics-9b-instruct'
 LM_TOKENIZER_PATH='HuggingFaceM4/idefics-9b-instruct'
 MODEL="IDEFICS9BINSTRUCT"
 
+# LM_PATH='HuggingFaceM4/idefics-80b'
+# LM_TOKENIZER_PATH='HuggingFaceM4/idefics-80b'
+# MODEL="IDEFICS80B"
 
+# LM_PATH='HuggingFaceM4/idefics-80b-instruct'
+# LM_TOKENIZER_PATH='HuggingFaceM4/idefics-80b-instruct'
+# MODEL="IDEFICS80BINSTRUCT"
 
 
 
@@ -44,6 +50,7 @@ batch_size=1
 MAX_N_OBJS=15
 num_trials=3
 
+## Add user_assistant to MODE to use the IDEFICS-instruct template e.g. itm_user_assistant
 ## Modes
 MODE="itm" # ITM
 
@@ -53,6 +60,7 @@ MODE="itm" # ITM
 # MODE="itm_objects" # ITM MT-ICL
 
 # MODE="its" # ITS
+
 
 
 

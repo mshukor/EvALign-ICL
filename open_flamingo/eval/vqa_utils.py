@@ -7,7 +7,7 @@ import re
 
 ######### get_prompt
 
-
+ 
 def get_prompt(sample, train=True, long_ans=False):
     ans = f"<image>Question:{sample['question'].strip()} Short answer:{sample['answers'][0].strip() if train else ''}{'<|endofchunk|>' if train else ''}"
 
@@ -100,8 +100,7 @@ def postprocess_unansgeneration_vqa_abstention(predictions, prompt='The question
 
 def postprocess_generation_vqa(predictions, long_ans=False):
     long_splitter = ",|\." if not long_ans else ",,,,,," # dummy splitter to avoid any split
-
-    answer = re.split("Question|Answer|answer|Short", predictions, 1)[0]
+    answer = re.split("Question|Answer|answer|Short|User", predictions, 1)[0]
     answer = re.split(long_splitter, answer, 1)[0]
     return answer
 
@@ -112,16 +111,12 @@ def postprocess_generation_vqa(predictions, long_ans=False):
 
 
 def postprocess_generation_vqa_exponly(predictions, exp_prompt=' because ', long_ans=False):
-
-
     long_splitter = ",|\." if not long_ans else ",,,,,," # dummy splitter to avoid any split
-
-        
-    return re.split(long_splitter, re.split("Question|Answer|answer", predictions, 1)[0].split(exp_prompt, 1)[0], 1)[0]
+    return re.split(long_splitter, re.split("Question|Answer|answer|User", predictions, 1)[0].split(exp_prompt, 1)[0], 1)[0]
 
 def postprocess_expgeneration_vqa_exponly(predictions, bad_prompt="Bad", good_prompt="Good"):
     try:
-        return re.split(f"Question|Answer|answer|{bad_prompt}", predictions, 1)[0] #.split("because", 1)[1]
+        return re.split(f"Question|Answer|answer|{bad_prompt}|User", predictions, 1)[0] #.split("because", 1)[1]
     except IndexError:
         print("error", predictions, re.split("Question|Answer|answer", predictions, 1))
         return ' '
@@ -129,10 +124,19 @@ def postprocess_expgeneration_vqa_exponly(predictions, bad_prompt="Bad", good_pr
 
 def postprocess_generation_vqa_explain(predictions, exp_prompt='because', long_ans=False):
     long_splitter = ",|\." if not long_ans else ",,,,,," # dummy splitter to avoid any split
-    return re.split(long_splitter, re.split("Question|Answer|answer|Explain", predictions, 1)[0].split(exp_prompt, 1)[0], 1)[0]
+    tmp = re.split("Question|Answer|answer|Explain|User", predictions, 1)[0]
+    if exp_prompt in tmp:
+        tmp = tmp.split(exp_prompt, 1)[0]
+        return re.split(long_splitter, tmp, 1)[0]
+    else:
+        if not long_ans:
+            return tmp.split()[0]
+        else:
+            return re.split(long_splitter, tmp, 1)[0]
+        
 
 def postprocess_expgeneration_vqa_explain(predictions, exp_prompt=' because ', contrastive=False, 
-                                                       good_prompt="Good:", bad_prompt="Bad:", contrastive_with_ans=False):
+                                                       good_prompt="Good:", bad_prompt="Bad:", contrastive_with_ans=False):    
     try:
         if contrastive:
             if contrastive_with_ans:
@@ -140,8 +144,11 @@ def postprocess_expgeneration_vqa_explain(predictions, exp_prompt=' because ', c
             else:
                 return re.split(bad_prompt, predictions, 1)[0].split(good_prompt, 1)[1]
         else:
-            return re.split("Question|Answer|answer", predictions, 1)[0].split(exp_prompt, 1)[1]
+            tmp = re.split("Question|Answer|answer|User", predictions, 1)[0]
+            if exp_prompt in tmp:
+                return tmp.split(exp_prompt, 1)[1]
+            else:
+                return ' '.join(tmp.split()[1:]) 
     except IndexError:
         print("error", predictions)
         return ' '
-    

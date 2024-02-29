@@ -275,10 +275,14 @@ Evaluation setups selected with `MODE`:
 
 > Explainability. Models are asked to generate an explanation for image, question and answer triplets from the VQA-X dataset.
 
+## Datasets
+
+We describe the datasets that we use in the following sections. We don't share the datasets due to licenses issues, and each one should be downloaded and reformatted as described below.
+
 ## Instruction Following
 
 ### Dataset
-* Download: doanload [LlAVA](https://llava-vl.github.io/) from [here](https://github.com/haotian-liu/LLaVA/blob/main/docs/Data.md). It uses COCO images.
+* Download: download [LLaVA](https://llava-vl.github.io/) from [here](https://github.com/haotian-liu/LLaVA/blob/main/docs/Data.md). It uses COCO images.
 * Format: for example the `llava_complex_reasoning_77k.json` contains items with the following format:
 
 ```
@@ -290,6 +294,8 @@ Evaluation setups selected with `MODE`:
  'image_id': 215677}
 ``` 
 Other instruction types follow similar format.
+
+We reformat the test questions/answers and put them in `data/llava`.
 
 ### Evaluation
 Launch scripts `scripts/instruction_following/`.

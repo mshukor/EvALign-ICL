@@ -104,7 +104,6 @@ for shot in {1,0,2,4,8,16,32};do
         --low_cpu \
         --precision float16 \
         --batch_size 1 \
-        --vqav2_questions_json_path $VQAV2_QUESTION_PATH \
         --query_set_size $QUERY_SIZE \
         --mode $MODE \
         --output_log $OUTPUT_LOG \
@@ -147,7 +146,6 @@ for shot in {1,0,2,4,8,16,32};do
         --low_cpu \
         --precision float16 \
         --batch_size 1 \
-        --vqav2_questions_json_path $VQAV2_QUESTION_PATH \
         --query_set_size $QUERY_SIZE \
         --mode $MODE \
         --output_log $OUTPUT_LOG \
@@ -193,7 +191,6 @@ for shot in {1,0,2,4,8,16,32};do
         --low_cpu \
         --precision float16 \
         --batch_size 1 \
-        --vqav2_questions_json_path $VQAV2_QUESTION_PATH \
         --query_set_size $QUERY_SIZE \
         --mode $MODE \
         --output_log $OUTPUT_LOG \
@@ -230,7 +227,6 @@ for shot in {1,0,2,4,8,16,32};do
         --low_cpu \
         --precision float16 \
         --batch_size 1 \
-        --vqav2_questions_json_path $VQAV2_QUESTION_PATH \
         --query_set_size $QUERY_SIZE \
         --mode $MODE \
         --output_log $OUTPUT_LOG \
